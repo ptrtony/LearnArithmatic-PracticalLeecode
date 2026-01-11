@@ -1,5 +1,9 @@
 package zhy.leecode;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.Stack;
+
 public class Leecode230 {
  /**
   * 给定一个二叉搜索树的根节点 root ，和一个整数 k ，请你设计一个算法查找其中第 k 小的元素（k 从 1 开始计数）。
@@ -29,7 +33,25 @@ public class Leecode230 {
 		 }
 	 }
 	 
+	 int temp = 0;
 	 public int kthSmallest(TreeNode root, int k) {
-	     
-	 } 
+		     int[] r = new int[k];
+	         for(int i = 0; i < k; i++) {
+	            r[i] = 0;
+	         }
+		     __kthSmallest(root, r, k);
+		     return r[k - 1];
+		 } 
+		 
+		 private void __kthSmallest(TreeNode root, int[] r, int k) {
+			 if(root == null) {
+				 return;
+			 }
+	          __kthSmallest(root.left, r, k);
+	          if(temp < k) {
+	              r[temp] = root.val;
+	              temp++; 
+	          }
+			 __kthSmallest(root.right, r, k);
+		 }
 }
